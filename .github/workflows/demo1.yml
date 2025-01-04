@@ -1,10 +1,17 @@
 name: Events Demo 1
 on:
-  pull_request:
-    types: 
-      - opened
-  workflow_dispatch:
-jobs:
+  pull_request:                                       # bu event trigger herhangi bir pull_request oluşturulduğunda çalışır
+    types:
+      - opened                                        # 
+  workflow_dispatch:    
+  push:
+    branches:                                        # push trigerr inin Branch filter'i
+      - main                                         # main branch'e push yapıldığında çalışır
+      - 'dev-*'                                      # dev-new , dev-this-is-new gibi branch'lerde çalışır
+      - 'feat/**'                                    # feat/new-feature gibi branch'lerde çalışır. kapsama alani daha fazla demektir.
+    paths-ignore:
+      - '.github/workflows/*'                        # .github/workflows/* dizinine yapilan push istekleri yaml i tetiklemez.
+jobs:                                                
   deploy:
     runs-on: ubuntu-latest
     steps:
